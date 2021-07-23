@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: childcare
+  labels:
+    app: childcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: childcare
+  template:
+    metadata:
+      labels:
+        app: childcare
+    spec:
+      containers:
+      - name: childcare
+        image: mehike/childcare:0.0.1
+        ports:
+        - containerPort: 8081
+        env:
+        - name: CONFIG_SERVICE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: service-host
+        - name: CONFIG_SERVICE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: service-port
+        - name: EUREKA_URI
+          valueFrom:
+            configMapKeyRef:
+              name: eureka
+              key: eureka-uri
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgresdb
+              key: database-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresdb
+              key: database-password
+        - name: POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: postgresdb
+              key: database-host
+        - name: POSTGRES_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: postgresdb
+              key: database-port
+        - name: MSGOT_DB
+          valueFrom:
+            configMapKeyRef:
+              name: ms-got
+              key: database-name

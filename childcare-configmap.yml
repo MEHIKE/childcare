@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: childcare
+  labels:
+    app: childcare
+data:
+  service-port: "8081"
+  service-host: childcare
+  eureka-uri: "http://eureka:8061/eureka/"
+  database-name: childcare
+

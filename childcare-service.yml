@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: childcare
+  labels:
+    app: childcare
+spec:
+  externalIPs:
+  - 192.168.1.156
+  - 88.196.63.92
+  ports:
+  - port: 8081
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    app: childcare
+  type: NodePort
